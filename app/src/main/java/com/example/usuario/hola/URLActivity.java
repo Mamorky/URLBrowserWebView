@@ -5,15 +5,16 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class URLActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText url;
     Button navegar;
     Intent intent;
-    Intent intSaludo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,13 @@ public class URLActivity extends AppCompatActivity implements View.OnClickListen
         if(view == navegar){
             intent = new Intent(this,WebViewActivity.class);
             intent = intent.putExtra("url",url.getText().toString());
-            startActivity(intent);
+
+            if(URLUtil.isValidUrl(url.getText().toString())){
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(this,"URL no válida",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
